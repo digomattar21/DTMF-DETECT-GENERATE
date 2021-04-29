@@ -51,7 +51,7 @@ def main():
     plt.grid()
     plt.title('Fourier audio')
     plt.show()
-    plt.savefig('img/fourier.png', format="png")
+    #plt.savefig('img/fourier.png', format="png")
 
     indexes = peakutils.indexes(yf, thres=0.1, min_dist=50)
     print("INDEX DOS PICOS {}" .format(indexes))
@@ -92,9 +92,6 @@ def main():
         decodedDigit = digitMatrix[idxs[0]][idxs[1]]
         print("DECODIFICACAO COMPLETA\nDIGITO CLICADO: ", decodedDigit)
         
-
-
-
 
 if __name__ == "__main__":
     main()

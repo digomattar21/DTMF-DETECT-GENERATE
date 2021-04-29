@@ -7,20 +7,13 @@ from suaBibSignal import *
 import sounddevice as sd
 import matplotlib.pyplot as plt
 
-
-
-#funções a serem utilizadas
 def signal_handler(signal, frame):
         print('You pressed Ctrl+C!')
         sys.exit(0)
 
-#converte intensidade em Db, caso queiram ...
 def todB(s):
     sdB = 10*np.log10(s)
     return(sdB)
-
-
-
 
 def main():
     c = signalMeu()
@@ -82,11 +75,18 @@ def main():
     sine = y + ipslom
     sd.play(sine, sampleRate)
     sd.wait()
+
+    xf, yf = c.calcFFT(sine, sampleRate)
+    plt.figure("F(y)")
+    plt.plot(xf, yf)
+    plt.grid()
+    plt.title('Fourier audio')
+    plt.show()
     
     time = np.linspace(-Te, Te, Te*sampleRate)
     plt.plot(time, y, "b--", label="Frequencia {} Hz".format(respectiveFreqs[0]))
     plt.plot(time, ipslom, "r--", label="Frequencia {} Hz".format(respectiveFreqs[1]))
-    plt.plot(time, sine, "g--", label="Freq 1 ({0}) + Freq 2 ({1})".format(y, ipslom))
+    plt.plot(time, sine, "g-.", label="Freq 1 ({0}) + Freq 2 ({1})".format(y, ipslom))
     plt.title("Grafico do som gerado pelo digito ecolhido {}".format(digitChosen))
     plt.ylabel("Amplitude")
     plt.xlabel("Tempo (s)")
@@ -97,7 +97,7 @@ def main():
     
     #plotFFT(self, signal, fs)
     
-    plt.savefig('img/graph_digit_{}.png'.format(digitChosen), format='png')
+    #plt.savefig('img/graph_digit_{}.png'.format(digitChosen), format='png')
     
 if __name__ == "__main__":
     main()
